@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<head>
+  <meta charset="utf-8">
+  <title>Google Translate</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+</head>
+
+  <div class="container">
+<body>
+	<h1>Translate API By Abdullah Hani</h1>
+	<p>Enter text to translate:</p>
+	<input type="text" id="inputText">
+	<button onclick="translateText()">Translate</button>
+	<p>Choose a language:</p>
+	<select id="languageSelect">
+		<option value="es">Spanish</option>
+		<option value="fr">French</option>
+		<option value="zh-CN">Chinese (Simplified)</option>
+		<option value="ur">Urdu</option>
+		<option value="de">German</option>
+        <option value="hi">Hindi</option>
+    <option value="it">Italian</option>
+<option value="ja">Japanese</option>
+<option value="ko">Korean</option>
+<option value="pt">Portuguese</option>
+<option value="ru">Russian</option>
+<option value="tr">Turkish</option>
+		<option value="ar">Arabic</option>
+	</select>
+	<p>Translated text:</p>
+	<p id="outputText"></p>
+
+	<script>
+		function translateText() {
+			const inputText = document.getElementById("inputText").value;
+			const outputText = document.getElementById("outputText");
+			const languageCode = document.getElementById("languageSelect").value;
+
+			const options = {
+				method: "POST",
+				headers: {
+					"content-type": "application/x-www-form-urlencoded",
+					"Accept-Encoding": "application/gzip",
+					"X-RapidAPI-Key": "753ca4f0e8msh39ad8f6cc4c3f0ap19f148jsn259aba7a8bc1",
+					"X-RapidAPI-Host": "google-translate1.p.rapidapi.com"
+				},
+				body: new URLSearchParams({
+					source: "en",
+					target: languageCode,
+					q: inputText
+				})
+			};
+
+			fetch("https://google-translate1.p.rapidapi.com/language/translate/v2", options)
+			.then(response => response.json())
+			.then(data => {
+				outputText.innerText = data.data.translations[0].translatedText;
+			})
+			.catch(error => {
+				console.error(error);
+				outputText.innerText = "Error: " + error.message;
+			});
+		}
+	</script>
+	  </div>
+
+</body>
+</html>
